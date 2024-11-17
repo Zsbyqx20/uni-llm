@@ -1,0 +1,75 @@
+[project]
+name = "uni-llm"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Zsbyqx20", email = "112002598+Zsbyqx20@users.noreply.github.com"},
+]
+dependencies = ["openai>=1.54.4", "anthropic>=0.39.0", "python-dotenv>=1.0.1", "httpx[socks]>=0.27.2", "pillow>=11.0.0", "reuse>=5.0.2"]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Text Processing :: Natural Language Processing",
+    "Topic :: Artificial Intelligence",
+    "Topic :: Machine Learning",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.7.4",
+    "pyright>=1.1.389",
+    "ipykernel>=6.29.5",
+    "pytest>=8.3.3",
+    "pytest-mock>=3.14.0",
+    "pytest-xdist>=3.6.1",
+    "pytest-cov>=6.0.0",
+    "pytest-asyncio>=0.24.0",
+    "semversioner>=2.0.5",
+    "update-toml>=0.2.1",
+]
+doc = [
+    "mkdocs-material>=9.5.44",
+]
+[tool.pdm]
+distribution = true
+excludes = ["tests/"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+python_files = ["*_test.py", "test_*.py"]
+python_classes = ["Test*", "*Test"]
+python_functions = ["test_*"]
+addopts = "-v -ra -q -n auto"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.pdm.scripts]
+_ruff_check_format = "ruff format . --check --preview"
+_ruff_check = "ruff check . --preview"
+_pyright = "pyright"
+_ruff_sort_imports = "ruff check --select I --fix . --preview"
+_ruff_format_code = "ruff format . --preview"
+_semversioner_release = "semversioner release"
+_semversioner_changelog = { shell = "semversioner changelog > CHANGELOG.md" }
+_semversioner_update_toml_version = { shell = "update-toml update --path project.version --value $(pdm run semversioner current-version)" }
+_test_all = "pytest --cov={project.name.replace('-', '_')} --cov-report=term-missing --cov-report=html"
+
+fix = "ruff check --fix . --preview"
+format = {composite = ['_ruff_sort_imports', '_ruff_format_code']}
+check = {composite = ['_ruff_check_format', '_ruff_check', '_pyright']}
+release = {composite = ['_semversioner_release', '_semversioner_changelog', '_semversioner_update_toml_version']}
+test = {composite = ['_test_all']}
