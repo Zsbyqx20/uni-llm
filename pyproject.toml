@@ -49,7 +49,6 @@ testpaths = ["tests"]
 python_files = ["*_test.py", "test_*.py"]
 python_classes = ["Test*", "*Test"]
 python_functions = ["test_*"]
-addopts = "-v -ra -q -n auto"
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "integration: marks tests as integration tests",
@@ -66,8 +65,9 @@ _ruff_format_code = "ruff format . --preview"
 _semversioner_release = "semversioner release"
 _semversioner_changelog = { shell = "semversioner changelog > CHANGELOG.md" }
 _semversioner_update_toml_version = { shell = "update-toml update --path project.version --value $(pdm run semversioner current-version)" }
-_test_all = "pytest --cov={project.name.replace('-', '_')} --cov-report=term-missing --cov-report=html"
+_test_all = "pytest -v -ra -q -n auto --cov={project.name.replace('-', '_')} --cov-report=term-missing --cov-report=html"
 
+ci_test = "pytest"
 fix = "ruff check --fix . --preview"
 format = {composite = ['_ruff_sort_imports', '_ruff_format_code']}
 check = {composite = ['_ruff_check_format', '_ruff_check', '_pyright']}

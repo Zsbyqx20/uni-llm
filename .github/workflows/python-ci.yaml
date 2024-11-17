@@ -50,7 +50,7 @@ jobs:
 
       - name: Run tests
         if: steps.filter.outputs.py-files == 'true' || steps.filter.outputs.dependency == 'true'
-        run: pdm run test
+        run: pdm run ci_test
       
       - name: Check for modified files
         if: steps.filter.outputs.py-files == 'true'
