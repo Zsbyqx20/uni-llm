@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-from typing import Any, Callable, TypeVar, cast
+from typing import Any, Callable, Sequence, TypeVar, cast
 
 from anthropic import Anthropic, AsyncAnthropic
 from anthropic._exceptions import AuthenticationError, PermissionDeniedError
@@ -74,7 +74,9 @@ class AnthropicClient(BaseClient):
 
         return {"role": "user", "content": contents.copy()}
 
-    def organize_messages(self, messages: list[MessageInput]) -> list[dict[str, Any]]:
+    def organize_messages(
+        self, messages: Sequence[MessageInput]
+    ) -> list[dict[str, Any]]:
         processed_messages = [
             msg if isinstance(msg, BaseMessage) else convert_to_message(msg)
             for msg in messages

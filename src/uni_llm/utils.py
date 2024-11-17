@@ -6,7 +6,7 @@ import asyncio
 import io
 import time
 from functools import wraps
-from typing import Awaitable, Callable, TypeVar, ParamSpec
+from typing import Awaitable, Callable, ParamSpec, TypeVar
 
 import requests
 from PIL import Image
