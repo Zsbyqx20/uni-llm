@@ -13,9 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pdm-project/setup-pdm@v3
-        with:
-          version: 'head'
+      - uses: pdm-project/setup-pdm@v4
 
       - name: Publish package distributions to TestPyPI
         run: pdm publish --repository testpypi
