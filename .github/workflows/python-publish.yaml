@@ -17,5 +17,5 @@ jobs:
         with:
           version: 'head'
 
-      - name: Publish package distributions to PyPI
-        run: pdm publish
+      - name: Publish package distributions to TestPyPI
+        run: pdm publish --repository testpypi
