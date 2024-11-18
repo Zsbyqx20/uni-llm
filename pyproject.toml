@@ -39,6 +39,11 @@ dev = [
 doc = [
     "mkdocs-material>=9.5.44",
 ]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
 [tool.pdm]
 distribution = true
 excludes = ["tests/"]
